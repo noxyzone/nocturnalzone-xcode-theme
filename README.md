@@ -15,6 +15,25 @@ cp NocturnalZone.xccolortheme ~/Library/Developer/Xcode/UserData/FontAndColorThe
 
 Then restart Xcode and select the theme in **Settings → Themes → NocturnalZone**.
 
+## Screenshot
+
+`assets/screenshot.png` (1200x800) is captured from an Xcode window showing
+[`scripts/lib/NocturnalZoneSample.swift.sample`](scripts/lib/NocturnalZoneSample.swift.sample):
+
+```bash
+scripts/screenshot.sh
+```
+
+The script installs `NocturnalZone.xccolortheme` into
+`~/Library/Developer/Xcode/UserData/FontAndColorThemes`, sets `XCFontAndColorCurrentTheme` for
+`com.apple.dt.Xcode`, opens the sample file, resizes the Xcode window to 1200x800, and captures
+it. Pass `--output-dir DIR` to capture outside `assets/`.
+
+The theme preference only takes effect when Xcode is closed. If Xcode is already running,
+select NocturnalZone in **Settings → Themes** and run the script again. macOS must allow the
+terminal to control the computer (**System Settings > Privacy & Security > Accessibility**) so
+the window geometry can be read.
+
 ## Palette
 
 ### Editor

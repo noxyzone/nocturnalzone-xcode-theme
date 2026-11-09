@@ -1,0 +1,63 @@
+import Foundation
+import SwiftUI
+
+// MARK: - Model
+
+/// A token representing a single brand color.
+struct ColorToken: Identifiable, Hashable {
+    let id = UUID()
+    let name: String
+    let hex: String
+    var isActive: Bool = true
+}
+
+// MARK: - View Model
+
+@Observable
+final class PaletteViewModel {
+    var tokens: [ColorToken] = [
+        ColorToken(name: "Background", hex: "#0D1117"),
+        ColorToken(name: "Surface",    hex: "#161B22"),
+        ColorToken(name: "Overlay",    hex: "#21262D"),
+        ColorToken(name: "Accent",     hex: "#58A6FF"),
+        ColorToken(name: "Success",    hex: "#3FB950"),
+        ColorToken(name: "Warning",    hex: "#D29922"),
+        ColorToken(name: "Error",      hex: "#F85149"),
+    ]
+
+    func toggle(_ token: ColorToken) {
+        guard let index = tokens.firstIndex(of: token) else { return }
+        tokens[index].isActive.toggle()
+    }
+}
+
+// MARK: - View
+
+struct PaletteView: View {
+    @State private var viewModel = PaletteViewModel()
+
+    var body: some View {
+        List(viewModel.tokens) { token in
+            HStack {
+                Text(token.name)
+                    .font(.headline)
+                Spacer()
+                Text(token.hex)
+                    .foregroundStyle(.secondary)
+                    .font(.caption.monospaced())
+                Toggle("", isOn: Binding(
+                    get: { token.isActive },
+                    set: { _ in viewModel.toggle(token) }
+                ))
+                .labelsHidden()
+            }
+        }
+        .navigationTitle("NocturnalZone")
+    }
+}
+
+// MARK: - Preview
+
+#Preview {
+    NavigationStack { PaletteView() }
+}
